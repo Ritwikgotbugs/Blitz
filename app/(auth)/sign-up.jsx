@@ -18,20 +18,28 @@ const Signup = () => {
           <Image source={images.logo} className="w-[150px] h-[80px] mt-10" resizeMode='contain'/>
           <Text className="text-3xl text-white font-bold text-center">Sign In to Aora</Text>
           
+
           <FormField
-            title="Email"
+            title="Username"
             value={form.email}
             handleChangeText={(e) => setForm({ ...form, email: e })}
             otherStyles="mt-7 mx-3"
             keyboardType="email-address"
+            placeholder={"Enter your Username"}
+          />
+          <FormField
+            title="Email"
+            value={form.email}
+            handleChangeText={(e) => setForm({ ...form, email: e })}
+            otherStyles="mt-3 mx-3"
+            keyboardType="email-address"
             placeholder={"Enter your email"}
           />
-
           <FormField
             title="Password"
             value={form.password}
             handleChangeText={(e) => setForm({ ...form, password: e })}
-            otherStyles="mt-7 mx-3"
+            otherStyles="mt-3 mx-3"
             placeholder={"Enter your password"}
           />
 

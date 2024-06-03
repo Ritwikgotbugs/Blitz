@@ -23,10 +23,13 @@ export default function App() {
         <View className="relative mt-3 w-[300px]">
           <Text className="text-3xl text-white font-bold text-center">Discover Endless Possibilities with <Text className="text-orange-300">Aora</Text></Text>
         </View>
+        <View className="relative mt-9 w-[300px]">
+          <Text className="text-xl text-gray-100 font-medium text-center">Signup for free and explore the world of creative minds</Text>
+        </View>
         <CustomButton
             title="Continue with Email"
             handlePress={() => router.push("/sign-in")}
-            containerStyles="w-full mt-7"
+            containerStyles="w-full mt-10"
           />
       </View>
       </ScrollView>

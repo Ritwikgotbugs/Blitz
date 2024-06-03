@@ -37,6 +37,13 @@ const FormField = ({
             />
           </TouchableOpacity>
         )}
+        {title === "" && (
+            <Image
+              source={icons.search}
+              className="w-4 h-4"
+              resizeMode="contain"
+            />
+        )}
       </View>
     </View>
   );

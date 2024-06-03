@@ -1,4 +1,5 @@
-import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity, Image } from "react-native";
+import { icons } from "../constants";
 
 const CustomButton = ({
   title,
@@ -27,6 +28,10 @@ const CustomButton = ({
           size="small"
           className="ml-2"
         />
+      )}
+
+      {title === "Create a Post" && (
+        <Image source={icons.plus} style={{ tintColor: "black" }} className="w-6 h-6 mx-3" />
       )}
     </TouchableOpacity>
   );
