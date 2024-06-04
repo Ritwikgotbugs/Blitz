@@ -4,18 +4,26 @@ import { Link, router } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { icons, images } from '../../constants'
 import CustomButton from '../../component/CustomButton'
+import { signOut } from '../../lib/appwrite'
 
 const Profile = () => {
+  const logout= () => {
+    signOut();
+    router.replace("/sign-in");
+  }
+
+
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'space-between' }}>
         <View className="w-full justify-end items-end flex-end">
-        <TouchableOpacity onPress={()=>router.push('/sign-in')}>
+        <TouchableOpacity onPress={logout}>
           <Image source={icons.logout} className="w-6 h-6 mx-5 my-4" />
         </TouchableOpacity>
         </View>
         <View>
-          <Image source={images.profile} className="w-[100px] h-[100px] rounded-full mx-auto my-5" resizeMode='contain' />
+          <Image 
+          source={images.profile} className="w-[100px] h-[100px] rounded-full mx-auto my-5" resizeMode='contain' />
           <Text className="text-white text-2xl font-bold text-center">Ritwik Sharma</Text>
         </View>
         <View className="items-center justify-center flex-row mt-3">

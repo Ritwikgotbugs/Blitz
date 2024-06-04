@@ -4,8 +4,14 @@ import { images } from '../constants';
 import { StatusBar } from 'expo-status-bar';
 import CustomButton from '../component/CustomButton';
 import { Redirect, router } from 'expo-router';
+import 'react-native-url-polyfill/auto'
+import { useGlobalContext } from '../context/GlobalProvider';
 
 export default function App() {
+
+  const { loading, isLogged } = useGlobalContext();
+
+  if (!loading && isLogged) return <Redirect href="/home" />;
   return (
     <SafeAreaView className="bg-primary h-full">
       <ScrollView contentContainerStyle={{height:'100%'}}>
@@ -28,7 +34,7 @@ export default function App() {
         </View>
         <CustomButton
             title="Continue with Email"
-            handlePress={() => router.push("/sign-in")}
+            handlePress={() => router.replace("/sign-in")}
             containerStyles="w-full mt-10"
           />
       </View>

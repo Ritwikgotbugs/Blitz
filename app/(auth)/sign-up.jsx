@@ -1,37 +1,58 @@
-import { View, ScrollView,Image,Text } from 'react-native'
+import { View, ScrollView,Image,Text, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { images } from '../../constants'
 import FormField from '../../component/FormField'
 import CustomButton from '../../component/CustomButton'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
+import { createUser } from '../../lib/appwrite'
 
 const Signup = () => {
   const [form, setForm] = useState({
     email: '',
-    password: ''
+    password: '',
+    username: ''
   })
+
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const submit = async () => {
+    if (form.username === "" || form.email === "" || form.password === "") {
+      Alert.alert("Error", "Please fill in all fields");
+    }
+
+    setIsSubmitting(true);
+    try {
+      await createUser(form.email, form.password, form.username);
+
+      router.replace("/home");
+    } catch (error) {
+      Alert.alert("Error", error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <SafeAreaView className="bg-primary h-full ">
       <ScrollView>
-        <View className="justify-center flex items-center w-full">
+        <View className="justify-center flex items-center w-full mt-10 px-4">
           <Image source={images.logo} className="w-[150px] h-[80px] mt-10" resizeMode='contain'/>
           <Text className="text-3xl text-white font-bold text-center">Sign In to Aora</Text>
           
 
           <FormField
             title="Username"
-            value={form.email}
-            handleChangeText={(e) => setForm({ ...form, email: e })}
-            otherStyles="mt-7 mx-3"
-            keyboardType="email-address"
+            value={form.username}
+            handleChangeText={(e) => setForm({ ...form, username: e })}
+            otherStyles="mt-7"
+            keyboardType="default"
             placeholder={"Enter your Username"}
           />
           <FormField
             title="Email"
             value={form.email}
             handleChangeText={(e) => setForm({ ...form, email: e })}
-            otherStyles="mt-3 mx-3"
+            otherStyles="mt-3"
             keyboardType="email-address"
             placeholder={"Enter your email"}
           />
@@ -39,14 +60,15 @@ const Signup = () => {
             title="Password"
             value={form.password}
             handleChangeText={(e) => setForm({ ...form, password: e })}
-            otherStyles="mt-3 mx-3"
+            otherStyles="mt-3"
             placeholder={"Enter your password"}
           />
 
           <CustomButton
             title="Sign Up"
-            handlePress={() => {}}
-            containerStyles="w-[90%] mt-8"
+            handlePress= {submit}
+            containerStyles="w-full mt-8"
+            isLoading={isSubmitting}
           />
           <Text className="text-white mt-4"
         >Already a user? {' '}

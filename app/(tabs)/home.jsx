@@ -3,8 +3,19 @@ import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { images } from '../../constants'
 import FormField from '../../component/FormField'
+import { TouchableOpacity } from 'react-native'
+import { router } from 'expo-router'
+import * as Haptics from 'expo-haptics';
 
 const Home = () => {
+
+
+  const goToProfile=()=> {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid)
+    router.push("/profile");
+
+  }
+
   return (
     <SafeAreaView className="h-full bg-primary">
     <ScrollView>
@@ -14,7 +25,14 @@ const Home = () => {
             <Text className="text-gray-100 text-xl">Welcome Back!</Text>
             <Text className="text-white text-4xl font-bold ">User</Text>
           </View>
-          <Image source={images.profile} className="w-[50px] h-[50px] rounded-full mx-3" resizeMode='contain'/>
+
+          <TouchableOpacity onPress={goToProfile} className="px-5">
+          <Image 
+          source={images.profile} 
+          className="w-[50px] h-[50px] rounded-full mx-auto my-3" 
+          resizeMode='contain' />
+          </TouchableOpacity>
+
         </View>
       </View>
       <FormField 
