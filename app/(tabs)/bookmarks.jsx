@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ScrollView } from 'react-native'
-import FormField from '../../component/FormField'
+import FormField from '../../components/FormField'
 
 const Bookmarks = () => {
   return (

@@ -1,9 +1,9 @@
-import { View, Text, Image, ScrollView, TouchableOpacity } from 'react-native'
+import { router } from 'expo-router'
 import React from 'react'
-import { Link, router } from 'expo-router'
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import EmptyList from '../../components/EmptyList'
 import { icons, images } from '../../constants'
-import CustomButton from '../../component/CustomButton'
 import { signOut } from '../../lib/appwrite'
 
 const Profile = () => {
@@ -36,15 +36,9 @@ const Profile = () => {
             <Text className="text-gray-100 text-l">Views</Text>
           </View>
         </View>
-        <Image source={images.empty} className="items-center justify-center w-full h-[200px]" resizeMode='contain' />
-        <Text className="text-gray-100 text-xl font-bold text-center">This profile has no posts yet!</Text>
-        <View style={{ marginBottom: 16 }}>
-          <CustomButton
-            title="Create a Post"
-            handlePress={() => router.push("/create")}
-            containerStyles="w-[90%] justify-center mt-5 items-center mx-auto flex-row"
-          />
-        </View>
+       <EmptyList
+        title={"No posts found"}
+       />
       </ScrollView>
     </SafeAreaView>
   )
