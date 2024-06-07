@@ -10,7 +10,6 @@ const Home = () => {
 
   return (
     <SafeAreaView className="h-full bg-primary">
-      <Header/>
       <CarouselSlider/>
 
     </SafeAreaView>

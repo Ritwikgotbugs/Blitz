@@ -5,13 +5,16 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import CustomButton from '../../components/CustomButton'
 import FormField from '../../components/FormField'
 import { images } from '../../constants'
-import { LoginUser } from '../../lib/appwrite'
+import { LoginUser, getCurrentUser } from '../../lib/appwrite'
+import { useGlobalContext } from '../../context/GlobalProvider'
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry'
 
 const SignIn = () => {
   const [form, setForm] = useState({
     email: '',
     password: ''
   })
+  const {setUser,setIsLogged }= useGlobalContext();
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const submit = async () => {
@@ -22,7 +25,10 @@ const SignIn = () => {
     setIsSubmitting(true);
     try {
       await LoginUser(form.email, form.password);
+      const result = await getCurrentUser();
 
+      setUser(result);
+      setIsLogged(true);
       router.replace("/home");
     } catch (error) {
       Alert.alert("Error", error.message);

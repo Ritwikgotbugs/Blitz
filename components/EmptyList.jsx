@@ -4,7 +4,7 @@ import { images } from '../constants'
 
 const EmptyList = ({title,subtitle}) => {
   return (
-    <View className="items-center justify-center px-4 flex">
+    <View className="px-4 flex items-center mt-5">
       <Image className="w-[270px] h-[200px] items-center justify-center mb-5" source={images.empty} resizeMode='cover'/>
       <Text className="text-white font-bold text-2xl">{title}</Text>
       <Text className="text-gray-100 font-semibold text-l">{subtitle}</Text>
