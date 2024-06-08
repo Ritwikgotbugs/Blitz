@@ -44,7 +44,7 @@ const Profile = () => {
           <View>
             <View className="w-full justify-end items-end flex-end">
         <TouchableOpacity onPress={logout}>
-          <Image source={icons.logout} className="w-6 h-6 mx-5 my-4" />
+          <Image source={icons.logout} className="w-6 h-6 mx-5 my-4" resizeMode='contain'/>
         </TouchableOpacity>
         </View>
         <View>

@@ -4,10 +4,12 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 import * as Haptics from "expo-haptics";
 import { icons } from "../constants";
 
-const Videos = ({ video: { title, thumbnail, video, creator: { avatar, username } } }) => {
+const Videos = ({ video: { title, thumbnail, videoUrl, 
+  creator: { avatar, username } } }) => {
   const [play, setPlay] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+
 
   return (
     <View className="flex flex-col items-center px-4 mb-10">
@@ -44,11 +46,12 @@ const Videos = ({ video: { title, thumbnail, video, creator: { avatar, username 
 
       {play ? (
         <Video
-          source={{ uri: "https://player.vimeo.com/video/949579770?h=897cd5e781" }}
-          className="w-full h-60 rounded-xl mt-3"
+          source={{ uri: videoUrl }}
+          className="w-full h-64 rounded-xl mt-3"
           resizeMode={ResizeMode.COVER}
           useNativeControls
           shouldPlay
+          isLooping
           onPlaybackStatusUpdate={(status) => {
             if (status.didJustFinish) {
               setPlay(false);
@@ -59,7 +62,7 @@ const Videos = ({ video: { title, thumbnail, video, creator: { avatar, username 
         <>
           <TouchableOpacity
             activeOpacity={0.7}
-            onPress={() => setPlay(true)}
+            onPress={() => {setPlay(true); console.log("Playing video", videoUrl)}}
             className="w-full h-60 rounded-xl mt-3 relative flex justify-center items-center"
           >
             <Image
