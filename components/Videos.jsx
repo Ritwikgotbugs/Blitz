@@ -3,13 +3,13 @@ import { useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import * as Haptics from "expo-haptics";
 import { icons } from "../constants";
+import { ActivityIndicator } from "react-native";
 
-const Videos = ({ video: { title, thumbnail, videoUrl, 
-  creator: { avatar, username } } }) => {
+const Videos = ({ title, thumbnail, videoUrl, avatar, username }) => {
   const [play, setPlay] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-
+  const [loading, setLoading] = useState(false);
 
   return (
     <View className="flex flex-col items-center px-4 mb-10">
@@ -44,30 +44,44 @@ const Videos = ({ video: { title, thumbnail, videoUrl,
         </View>
       </View>
 
-      {play ? (
-        <Video
-          source={{ uri: videoUrl }}
-          className="w-full h-64 rounded-xl mt-3"
-          resizeMode={ResizeMode.COVER}
-          useNativeControls
-          shouldPlay
-          isLooping
-          onPlaybackStatusUpdate={(status) => {
-            if (status.didJustFinish) {
-              setPlay(false);
-            }
-          }}
-        />
-      ) : (
-        <>
+      <View className="w-full mt-4">
+        {play ? (
+          <View className="w-full h-60 rounded-xl bg-white/10 flex items-center justify-center">
+            {loading && (
+            <ActivityIndicator
+              size="large"
+              color="#fff"
+              className="absolute"
+            />
+          )}
+            <Video
+              source={{ uri: videoUrl }}
+              className="w-full h-64 rounded-xl"
+              resizeMode={ResizeMode.COVER}
+              useNativeControls
+              shouldPlay
+              isLooping
+              onPlaybackStatusUpdate={(status) => {
+                if (status.isLoading) {
+                  setLoading(true);
+                } else {
+                  setLoading(false);
+                }
+                if (status.didJustFinish) {
+                  setPlay(false);
+                }
+              }}
+            />
+          </View>
+        ) : (
           <TouchableOpacity
             activeOpacity={0.7}
-            onPress={() => {setPlay(true); console.log("Playing video", videoUrl)}}
-            className="w-full h-60 rounded-xl mt-3 relative flex justify-center items-center"
+            onPress={() => {setPlay(true); setLoading(true);}}
+            className="w-full h-60 rounded-xl flex justify-center items-center bg-white/10"
           >
             <Image
               source={{ uri: thumbnail }}
-              className="w-full h-full rounded-xl mt-3"
+              className="w-full h-60 rounded-xl"
               resizeMode="cover"
             />
 
@@ -77,29 +91,38 @@ const Videos = ({ video: { title, thumbnail, videoUrl,
               resizeMode="contain"
             />
           </TouchableOpacity>
-          <View className="flex flex-row w-full mt-5 gap-x-7 items-center">
-            <TouchableOpacity onPress={() => {
-              setIsLiked(!isLiked)
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-              }}>
-            <Image 
-              source={isLiked ? icons.heart_fill : icons.heart} 
-              className="w-7 h-7" 
-              resizeMode="contain" 
+        )}
+
+        <View className="flex flex-row w-full mt-5 px-2 gap-x-4 items-center">
+          <TouchableOpacity
+            onPress={() => {
+              setIsLiked(!isLiked);
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            }}
+          >
+            <Image
+              source={isLiked ? icons.heart_fill : icons.heart}
+              className="w-7 h-7"
+              resizeMode="contain"
             />
           </TouchableOpacity>
-            <TouchableOpacity onPress={()=> {
-              setIsSaved(!isSaved)
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
-              }}>
-              <Image source={isSaved? icons.save_fill : icons.save} className="w-7 h-6" resizeMode="contain" />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Image source={icons.share} className="w-6 h-6" resizeMode="contain" />
-            </TouchableOpacity>
-          </View>
-        </>
-      )}
+          <TouchableOpacity
+            onPress={() => {
+              setIsSaved(!isSaved);
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            }}
+          >
+            <Image
+              source={isSaved ? icons.save_fill : icons.save}
+              className="w-7 h-6"
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Image source={icons.share} className="w-6 h-6" resizeMode="contain" />
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 };

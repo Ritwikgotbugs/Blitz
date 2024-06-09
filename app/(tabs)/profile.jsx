@@ -1,9 +1,9 @@
 import { router } from 'expo-router'
 import React from 'react'
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import { Image, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import EmptyList from '../../components/EmptyList'
-import { icons, images } from '../../constants'
+import { icons } from '../../constants'
 import { getUserPosts, signOut } from '../../lib/appwrite'
 import { FlatList } from 'react-native'
 import Videos from '../../components/Videos'
@@ -31,7 +31,13 @@ const Profile = () => {
         renderItem={({ item }) => (
           <View className="mt-5">
 
-            <Videos video={item} />
+          <Videos 
+          title={item.title}
+          thumbnail={item.thumbnail}
+          videoUrl={item.video}
+          avatar={item.creator.avatar}
+          username={item.creator.username}
+          />
           </View>
         )}
         ListEmptyComponent={() => (

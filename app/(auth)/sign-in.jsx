@@ -7,7 +7,6 @@ import FormField from '../../components/FormField'
 import { images } from '../../constants'
 import { LoginUser, getCurrentUser } from '../../lib/appwrite'
 import { useGlobalContext } from '../../context/GlobalProvider'
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry'
 
 const SignIn = () => {
   const [form, setForm] = useState({

@@ -26,7 +26,13 @@ const Search = () => {
         renderItem={({ item }) => (
           <View className="mt-5">
 
-            <Videos video={item} />
+          <Videos 
+          title={item.title}
+          thumbnail={item.thumbnail}
+          videoUrl={item.video}
+          avatar={item.creator.avatar}
+          username={item.creator.username}
+          />
           </View>
         )}
         ListEmptyComponent={() => (
