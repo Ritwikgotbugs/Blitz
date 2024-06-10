@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { ResizeMode, Video } from "expo-av";
 import * as Animatable from "react-native-animatable";
+import useAppwrite  from "../lib/useAppwrite";
 import {
   FlatList,
   View,
   Image,
   ImageBackground,
   TouchableOpacity,
+  RefreshControl,
 } from "react-native";
 
 import { ActivityIndicator } from "react-native";
 
 import { icons } from "../constants";
+import { getLatest } from "../lib/appwrite";
 
 const zoomIn = {
   0: {
@@ -93,15 +96,15 @@ const TrendingItem = ({ activeItem, item }) => {
 
 const Trending = ({ posts }) => {
   const [activeItem, setActiveItem] = useState(posts[0]);
-
   const viewableItemsChanged = ({ viewableItems }) => {
     if (viewableItems.length > 0) {
       setActiveItem(viewableItems[0].key);
     }
   };
-
+ 
   return (
-    <FlatList
+
+     <FlatList
     showsHorizontalScrollIndicator={false}
       data={posts}
       horizontal
@@ -114,7 +117,9 @@ const Trending = ({ posts }) => {
         itemVisiblePercentThreshold: 70,
       }}
       contentOffset={{ x: 170 }}
+      
     />
+
   );
 };
 

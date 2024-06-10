@@ -43,7 +43,7 @@ const Signup = () => {
       <ScrollView>
         <View className="justify-center flex items-center w-full mt-10 px-4">
           <Image source={images.logo} className="w-[150px] h-[80px] mt-10" resizeMode='contain'/>
-          <Text className="text-3xl text-white font-bold text-center">Sign In to Aora</Text>
+          <Text className="text-3xl text-white font-bold text-center">Sign In to Blitz</Text>
           
 
           <FormField

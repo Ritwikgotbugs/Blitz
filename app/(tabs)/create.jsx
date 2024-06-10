@@ -18,7 +18,8 @@ const Create = () => {
   const [form, setForm]= useState({
     title:'',
     video:null,
-    thumbnail:null
+    thumbnail:null,
+    like_count:0,
   })
 
 
@@ -64,7 +65,8 @@ const Create = () => {
       setForm({
         title:'',
         video:null,
-        thumbnail:null
+        thumbnail:null,
+        like_count:0,
       
       })
       setUploading(false)
@@ -113,7 +115,7 @@ const Create = () => {
         {form.thumbnail? 
         (
           <Image 
-          className="w-full h-40 rounded-2xl mt-4" 
+          className="w-full h-60 rounded-2xl mt-4 bg-white/10 items-center justify-center" 
           source={{uri:form.thumbnail.uri}} 
           resizeMode='cover'/> 
         ):

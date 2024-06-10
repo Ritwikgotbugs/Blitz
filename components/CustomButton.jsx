@@ -17,22 +17,21 @@ const CustomButton = ({
       }`}
       disabled={isLoading}
     >
-      <Text className={`text-primary font-bold text-lg ${textStyles}`}>
-        {title}
-      </Text>
+      
 
-      {isLoading && (
+      {isLoading ? (
         <ActivityIndicator
           animating={isLoading}
           color="#fff"
           size="small"
           className="ml-2"
         />
+      ): (
+        <Text className={`text-primary font-bold text-lg ${textStyles}`}>
+        {title}
+      </Text>
       )}
 
-      {title === "Create a Post" && (
-        <Image source={icons.plus} style={{ tintColor: "black" }} className="w-6 h-6 mx-3" />
-      )}
     </TouchableOpacity>
   );
 };

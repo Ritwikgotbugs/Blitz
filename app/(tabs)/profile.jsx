@@ -26,14 +26,6 @@ const Profile = () => {
   const {user,setUser,setIsLogged }= useGlobalContext();
   const {data:posts,refetch}= useAppwrite(()=> getUserPosts(user.$id))
 
-  const updateAvatar = async ()=> {
-    const result = await DocumentPicker.getDocumentAsync({
-      type: ["image/png", "image/jpg", "image/jpeg"],
-    });
-    if (!result.canceled) {
-      await changeAvatar(result.assets[0].uri);
-    }
-  }
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = async () => {
@@ -83,7 +75,7 @@ const Profile = () => {
           source={{uri: user?.avatar}} className=" h-20 w-20 rounded-full mx-auto my-5" resizeMode='cover' />
           <TouchableOpacity className="w-6 h-6 absolute right-40 top-20" onPress={()=> {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid)
-            // updateAvatar();
+            updateAvatar();
           }}>
             <Image source={icons.menu} className="w-6 h-6" resizeMode='contain'/>
           </TouchableOpacity>
@@ -95,7 +87,7 @@ const Profile = () => {
             <Text className="text-gray-100 text-l">Posts</Text>
           </View>
           <View className="items-center ml-5">
-            <Text className="font-bold text-white text-2xl">12.3k</Text>
+            <Text className="font-bold text-white text-2xl">0</Text>
             <Text className="text-gray-100 text-l">Followers</Text>
           </View>
         </View>

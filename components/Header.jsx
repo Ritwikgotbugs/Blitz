@@ -35,7 +35,7 @@ const Header = () => {
 
         </View>
         <SearchInput/>
-       <Text className="text-gray-100 font-regular text-xl px-5 mt-5 mb-5">Latest Posts</Text>
+       <Text className="text-gray-100 font-regular text-xl px-5 mt-5 mb-5">Trending Posts</Text>
 
       </>
   )

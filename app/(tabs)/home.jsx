@@ -38,6 +38,7 @@ const Home = () => {
               username={item.creator.username}
               userId={item.creator.$id}
               postId={item.$id}
+              
             />
           )}
           ListEmptyComponent={() => (
@@ -47,7 +48,7 @@ const Home = () => {
             <>
               <Header />
               <View className="w-full mt-0 justify-center items-center">
-                <Trending posts={trending} />
+                <Trending posts={trending} /> 
                 <Text className="text-gray-100 font-regular text-xl px-5 mt-5 mb-5">Explore</Text>
               </View>
             </>

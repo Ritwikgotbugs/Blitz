@@ -6,7 +6,7 @@ import { icons } from "../constants";
 import { ActivityIndicator } from "react-native";
 import * as Sharing from 'expo-sharing';
 import { useGlobalContext } from "../context/GlobalProvider";
-import { deletePost, getPosts } from "../lib/appwrite";
+import { deletePost } from "../lib/appwrite";
 import { Alert } from "react-native";
 
 const Videos = ({ title, thumbnail, videoUrl, avatar, username,userId, postId }) => {
@@ -16,7 +16,9 @@ const Videos = ({ title, thumbnail, videoUrl, avatar, username,userId, postId })
   const [isSaved, setIsSaved] = useState(false);
   const [loading, setLoading] = useState(false);
   const [following, setFollowing] = useState(false);
+
   
+ 
   const onDelete = () => {
     Alert.alert(
       "Delete Post",
@@ -143,7 +145,7 @@ const Videos = ({ title, thumbnail, videoUrl, avatar, username,userId, postId })
               resizeMode="contain"
             />
              <Text className="text-white text-xl pl-1">
-              1
+              {isLiked ? 1 : 0}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
