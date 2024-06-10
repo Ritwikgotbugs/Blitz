@@ -15,6 +15,7 @@ const Videos = ({ title, thumbnail, videoUrl, avatar, username,userId, postId })
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [following, setFollowing] = useState(false);
   
   const onDelete = () => {
     Alert.alert(
@@ -128,8 +129,9 @@ const Videos = ({ title, thumbnail, videoUrl, avatar, username,userId, postId })
           </TouchableOpacity>
         )}
 
-        <View className="flex flex-row w-full mt-5 px-2 gap-x-4 items-center">
+        <View className="flex flex-row w-full mt-3 px-2 gap-x-4 items-center">
           <TouchableOpacity
+            className="flex flex-row items-center gap-x-1"
             onPress={() => {
               setIsLiked(!isLiked);
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -140,8 +142,12 @@ const Videos = ({ title, thumbnail, videoUrl, avatar, username,userId, postId })
               className="w-7 h-7"
               resizeMode="contain"
             />
+             <Text className="text-white text-xl pl-1">
+              1
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
+          className="flex flex-row items-center"
             onPress={() => {
               setIsSaved(!isSaved);
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -152,6 +158,7 @@ const Videos = ({ title, thumbnail, videoUrl, avatar, username,userId, postId })
               className="w-7 h-6"
               resizeMode="contain"
             />
+           
           </TouchableOpacity>
           <TouchableOpacity onPress={()=> {
             Sharing.shareAsync(videoUrl);
@@ -159,6 +166,21 @@ const Videos = ({ title, thumbnail, videoUrl, avatar, username,userId, postId })
           }}>
             <Image source={icons.share} className="w-6 h-6" resizeMode="contain" />
           </TouchableOpacity>
+
+          { user && user.$id === userId ? (
+            <View/>
+          ):(
+            <TouchableOpacity
+            onPress={() => {
+              setFollowing(!following);
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            }}
+          >
+            <View className={` border-1 border rounded-lg px-2 py-2 ${following? "bg-blue-500" : "bg-black-200 border-white"}` }>
+              <Text className={`${following? "text-black" : "text-white"} font-bold`}>{following ? "Following" : "Follow"}</Text>
+            </View>
+          </TouchableOpacity>
+          )}
         </View>
       </View>
     </View>

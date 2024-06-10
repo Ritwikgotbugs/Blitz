@@ -4,7 +4,7 @@ import { Image, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import EmptyList from '../../components/EmptyList'
 import { icons } from '../../constants'
-import { getPosts, getUserPosts, signOut } from '../../lib/appwrite'
+import { changeAvatar, getPosts, getUserPosts, signOut } from '../../lib/appwrite'
 import { FlatList } from 'react-native'
 import Videos from '../../components/Videos'
 import useAppwrite from '../../lib/useAppwrite'
@@ -12,6 +12,7 @@ import { useGlobalContext } from '../../context/GlobalProvider'
 import { RefreshControl } from 'react-native'
 import { useState } from 'react'
 import * as Haptics from 'expo-haptics'
+import * as DocumentPicker from 'expo-document-picker'
 
 const Profile = () => {
   const logout= async () => {
@@ -25,7 +26,14 @@ const Profile = () => {
   const {user,setUser,setIsLogged }= useGlobalContext();
   const {data:posts,refetch}= useAppwrite(()=> getUserPosts(user.$id))
 
-
+  const updateAvatar = async ()=> {
+    const result = await DocumentPicker.getDocumentAsync({
+      type: ["image/png", "image/jpg", "image/jpeg"],
+    });
+    if (!result.canceled) {
+      await changeAvatar(result.assets[0].uri);
+    }
+  }
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = async () => {
@@ -70,9 +78,15 @@ const Profile = () => {
           <Image source={icons.logout} className="w-6 h-6 mx-5 my-4" resizeMode='contain'/>
         </TouchableOpacity>
         </View>
-        <View>
+        <View className="items-center justify-center relative">
           <Image 
           source={{uri: user?.avatar}} className=" h-20 w-20 rounded-full mx-auto my-5" resizeMode='cover' />
+          <TouchableOpacity className="w-6 h-6 absolute right-40 top-20" onPress={()=> {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid)
+            // updateAvatar();
+          }}>
+            <Image source={icons.menu} className="w-6 h-6" resizeMode='contain'/>
+          </TouchableOpacity>
           <Text className="text-white text-2xl font-bold text-center">{user?.username}</Text>
         </View>
         <View className="items-center justify-center flex-row mt-3 mb-5">
