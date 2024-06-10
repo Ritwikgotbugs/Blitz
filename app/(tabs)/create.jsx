@@ -57,13 +57,16 @@ const Create = () => {
       await createVideoPost({
         ...form,userId: user.$id
       })
-
-      
       router.replace('/home')
     } catch (error) {
       Alert.alert('Error', error.message)
     } finally {
-
+      setForm({
+        title:'',
+        video:null,
+        thumbnail:null
+      
+      })
       setUploading(false)
     }
   }

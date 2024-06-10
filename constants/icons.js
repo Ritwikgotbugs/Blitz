@@ -16,6 +16,7 @@ import heart_fill from "../assets/icons/heart_fill.png";
 import save from "../assets/icons/save.png";
 import save_fill from "../assets/icons/save_fill.png";
 import share from "../assets/icons/share.png";
+import delete_icon from "../assets/icons/delete_icon.png";
 
 export default {
   play,
@@ -35,5 +36,6 @@ export default {
   heart,
   save,
   save_fill,
-  share
+  share,
+  delete_icon
 };

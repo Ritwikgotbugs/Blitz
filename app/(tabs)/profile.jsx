@@ -4,11 +4,14 @@ import { Image, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import EmptyList from '../../components/EmptyList'
 import { icons } from '../../constants'
-import { getUserPosts, signOut } from '../../lib/appwrite'
+import { getPosts, getUserPosts, signOut } from '../../lib/appwrite'
 import { FlatList } from 'react-native'
 import Videos from '../../components/Videos'
 import useAppwrite from '../../lib/useAppwrite'
 import { useGlobalContext } from '../../context/GlobalProvider'
+import { RefreshControl } from 'react-native'
+import { useState } from 'react'
+import * as Haptics from 'expo-haptics'
 
 const Profile = () => {
   const logout= async () => {
@@ -20,9 +23,21 @@ const Profile = () => {
   }
 
   const {user,setUser,setIsLogged }= useGlobalContext();
-  const {data:posts}= useAppwrite(()=> getUserPosts(user.$id))
+  const {data:posts,refetch}= useAppwrite(()=> getUserPosts(user.$id))
+
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid)
+    await refetch();
+    setRefreshing(false);
+  };
+
   return (
     <SafeAreaView className="bg-primary h-full">
+      <View>
         <FlatList
         showsVerticalScrollIndicator={false}
         className="w-full h-full flex mb-0 mt-5"
@@ -31,13 +46,15 @@ const Profile = () => {
         renderItem={({ item }) => (
           <View className="mt-5">
 
-          <Videos 
+          <Videos
           title={item.title}
           thumbnail={item.thumbnail}
           videoUrl={item.video}
           avatar={item.creator.avatar}
           username={item.creator.username}
-          />
+          userId={item.creator.$id}
+          postId={item.$id}
+        />
           </View>
         )}
         ListEmptyComponent={() => (
@@ -71,7 +88,11 @@ const Profile = () => {
           </View>
         )}
         
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#FFFFFF" />
+        }
       />
+      </View>
     </SafeAreaView>
   )
 }

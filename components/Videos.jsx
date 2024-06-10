@@ -4,16 +4,41 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 import * as Haptics from "expo-haptics";
 import { icons } from "../constants";
 import { ActivityIndicator } from "react-native";
+import * as Sharing from 'expo-sharing';
+import { useGlobalContext } from "../context/GlobalProvider";
+import { deletePost, getPosts } from "../lib/appwrite";
+import { Alert } from "react-native";
 
-const Videos = ({ title, thumbnail, videoUrl, avatar, username }) => {
+const Videos = ({ title, thumbnail, videoUrl, avatar, username,userId, postId }) => {
+  const {user}= useGlobalContext();
   const [play, setPlay] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  
+  const onDelete = () => {
+    Alert.alert(
+      "Delete Post",
+      "Are you sure you want to delete this post?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => {},
+          style: "cancel"
+        },
+        {
+          text: "OK",
+          onPress:  () =>  {
+            deletePost(postId);
+          }
+        }
+      ],
+      { cancelable: false }
+    );
+  };
   return (
     <View className="flex flex-col items-center px-4 mb-10">
-      <View className="flex flex-row gap-3 items-start">
+      <View className="flex flex-row gap-3 items-center">
         <View className="flex justify-center items-center flex-row flex-1">
           <View className="w-[46px] h-[46px] rounded-lg flex justify-center items-center p-0.5">
             <Image
@@ -39,9 +64,19 @@ const Videos = ({ title, thumbnail, videoUrl, avatar, username }) => {
           </View>
         </View>
 
-        <View className="pt-2">
-          <Image source={icons.menu} className="w-5 h-5" resizeMode="contain" />
-        </View>
+        {user && user.$id === userId ? (
+          <TouchableOpacity className="pt-2" onPress={()=> {
+            onDelete();
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          }}>
+          <Image 
+          source={icons.delete_icon} 
+          className="w-6 h-6" 
+          resizeMode="contain" />
+        </TouchableOpacity>
+        ):(
+          <View></View>
+        )}
       </View>
 
       <View className="w-full mt-4">
@@ -118,7 +153,10 @@ const Videos = ({ title, thumbnail, videoUrl, avatar, username }) => {
               resizeMode="contain"
             />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=> {
+            Sharing.shareAsync(videoUrl);
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          }}>
             <Image source={icons.share} className="w-6 h-6" resizeMode="contain" />
           </TouchableOpacity>
         </View>
