@@ -23,9 +23,9 @@
 - **Robust Authentication & Authorization System**
 - **Pull-to-Refresh Functionality** 
 - **Search Capability**
-- **Tab Navigation**:.
+- **Tab Navigation**
 - **Create-Read-Update-Delete Posts**
-- **Responsiveness**:
+- **Responsiveness**
 
 
 ## 🎥 Preview of the App
