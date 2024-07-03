@@ -13,8 +13,7 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true,
-      "package": "com.expo.aora"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
@@ -28,6 +27,14 @@
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "a20cbb51-5911-4232-a014-259cfca69a5f"
+      }
+    }
   }
 }
