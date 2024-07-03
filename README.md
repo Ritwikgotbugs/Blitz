@@ -23,12 +23,12 @@
 - **Robust Authentication & Authorization System**
 - **Pull-to-Refresh Functionality** 
 - **Search Capability**
-- **Tab Navigation**:.
+- **Tab Navigation**
 - **Create-Read-Update-Delete Posts**
-- **Responsiveness**:
+- **Responsiveness**
 
 
-## Preview of the App
+## 🎥 Preview of the App
 
 https://github.com/Ritwikgotbugs/Blitz/assets/101137482/4dbebe8e-2183-4ecf-a187-a89b6d65e4e6
 
